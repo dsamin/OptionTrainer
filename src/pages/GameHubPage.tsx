@@ -62,7 +62,7 @@ export default function GameHubPage() {
         {[
           { icon: Zap,    label: 'Total XP',  value: currentUser.total_xp.toLocaleString(),   color: 'text-yellow-400', bg: 'bg-yellow-900/20' },
           { icon: Star,   label: 'Trophies',  value: achievements.length,                      color: 'text-amber-400',  bg: 'bg-amber-900/20'  },
-          { icon: Target, label: 'Lessons',   value: `${currentUser.lessons_completed}/21`,    color: 'text-indigo-400', bg: 'bg-indigo-900/20' },
+          { icon: Target, label: 'Lessons',   value: `${currentUser.lessons_completed}/18`,    color: 'text-indigo-400', bg: 'bg-indigo-900/20' },
         ].map(({ icon: Icon, label, value, color, bg }) => (
           <div key={label} className={cn('rounded-xl border border-gray-800 p-4 flex items-center gap-3', bg)}>
             <Icon className={cn('w-5 h-5', color)} />

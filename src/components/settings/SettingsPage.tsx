@@ -267,7 +267,7 @@ export function SettingsPage() {
                 className="text-center text-sm text-gray-600 py-4"
             >
                 <p>OptionTrainer v1.0.0</p>
-                <p className="mt-1">21-Day Options Trading Curriculum</p>
+                <p className="mt-1">18-Day Options Trading Curriculum</p>
             </motion.div>
         </div>
     )

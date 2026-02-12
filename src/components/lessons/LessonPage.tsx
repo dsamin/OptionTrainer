@@ -115,7 +115,7 @@ export function LessonPage() {
 
     const isCompleted = lessons[dayNumber]?.completed
     const isUnlocked = isLessonUnlocked(dayNumber)
-    const weekNumber = Math.ceil(dayNumber / 7)
+    const weekNumber = Math.ceil(dayNumber / 6)
 
     if (!lesson) {
         return (
@@ -169,7 +169,7 @@ export function LessonPage() {
                             Prev
                         </Link>
                     )}
-                    {dayNumber < 21 && (
+                    {dayNumber < 18 && (
                         <Link
                             to={`/lesson/${dayNumber + 1}`}
                             className={cn(

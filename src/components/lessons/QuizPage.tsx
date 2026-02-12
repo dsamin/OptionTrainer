@@ -196,7 +196,7 @@ export function QuizPage() {
                             <ChevronLeft className="w-4 h-4" />
                             Review Lesson
                         </Link>
-                        {dayNumber < 21 ? (
+                        {dayNumber < 18 ? (
                             <Link to={`/lesson/${dayNumber + 1}`} className="btn-primary flex items-center gap-2">
                                 Next Lesson
                                 <ArrowRight className="w-4 h-4" />
