@@ -11,11 +11,17 @@ export interface LessonContent {
 }
 
 export interface ContentSection {
-  type: 'text' | 'chart' | 'example' | 'tip' | 'warning' | 'exercise'
+  type: 'text' | 'chart' | 'example' | 'tip' | 'warning' | 'exercise' | 'simulator'
   title?: string
   content: string
   image?: string
   stock?: string
+  simulatorPreset?: {
+    stockPrice: number
+    strikePrice: number
+    optionType: 'call' | 'put'
+    scenario: 'theta-decay' | 'delta-sensitivity' | 'full'
+  }
 }
 
 export interface QuizQuestion {

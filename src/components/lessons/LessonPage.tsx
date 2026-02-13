@@ -12,11 +12,13 @@ import {
     Clock,
     Target,
     CheckCircle2,
-    Play
+    Play,
+    Activity
 } from 'lucide-react'
 import { getDayContent, type ContentSection } from '../../data/curriculum'
 import { useProgressStore } from '../../stores/progressStore'
 import { cn } from '../../lib/utils'
+import { MiniSimulator } from '../simulator/MiniSimulator'
 
 const sectionIcons: Record<ContentSection['type'], typeof BookOpen> = {
     text: BookOpen,
@@ -25,6 +27,7 @@ const sectionIcons: Record<ContentSection['type'], typeof BookOpen> = {
     tip: Lightbulb,
     warning: AlertTriangle,
     exercise: Dumbbell,
+    simulator: Activity,
 }
 
 const sectionStyles: Record<ContentSection['type'], { bg: string; border: string; iconColor: string; label: string }> = {
@@ -34,6 +37,7 @@ const sectionStyles: Record<ContentSection['type'], { bg: string; border: string
     tip: { bg: 'bg-primary-900/20', border: 'border-primary-700/30', iconColor: 'text-primary-400', label: 'Pro Tip' },
     warning: { bg: 'bg-warning-600/10', border: 'border-warning-600/30', iconColor: 'text-warning-400', label: 'Warning' },
     exercise: { bg: 'bg-success-600/10', border: 'border-success-600/30', iconColor: 'text-success-400', label: 'Exercise' },
+    simulator: { bg: 'bg-blue-900/20', border: 'border-blue-700/30', iconColor: 'text-blue-400', label: 'Interactive Simulator' },
 }
 
 function ContentBlock({ section, index }: { section: ContentSection; index: number }) {
@@ -74,34 +78,38 @@ function ContentBlock({ section, index }: { section: ContentSection; index: numb
             )}
 
             {/* Content */}
-            <div className="prose prose-invert max-w-none">
-                {section.content.split('\n\n').map((paragraph, i) => (
-                    <div key={i} className="mb-3 last:mb-0">
-                        {paragraph.split('\n').map((line, j) => {
-                            // Handle markdown-style bold
-                            const parts = line.split(/(\*\*[^*]+\*\*)/g)
-                            return (
-                                <p key={j} className="text-gray-300 leading-relaxed mb-1 last:mb-0">
-                                    {parts.map((part, k) => {
-                                        if (part.startsWith('**') && part.endsWith('**')) {
-                                            return <strong key={k} className="text-gray-100 font-semibold">{part.slice(2, -2)}</strong>
-                                        }
-                                        // Handle list items
-                                        if (part.trim().startsWith('- ') || part.trim().startsWith('• ')) {
-                                            return <span key={k} className="block pl-4 text-gray-400">{part}</span>
-                                        }
-                                        // Handle numbered lists
-                                        if (/^\d+\.\s/.test(part.trim())) {
-                                            return <span key={k} className="block pl-4 text-gray-400">{part}</span>
-                                        }
-                                        return <span key={k}>{part}</span>
-                                    })}
-                                </p>
-                            )
-                        })}
-                    </div>
-                ))}
-            </div>
+            {section.type === 'simulator' && section.simulatorPreset ? (
+                <MiniSimulator preset={section.simulatorPreset} />
+            ) : (
+                <div className="prose prose-invert max-w-none">
+                    {section.content.split('\n\n').map((paragraph, i) => (
+                        <div key={i} className="mb-3 last:mb-0">
+                            {paragraph.split('\n').map((line, j) => {
+                                // Handle markdown-style bold
+                                const parts = line.split(/(\*\*[^*]+\*\*)/g)
+                                return (
+                                    <p key={j} className="text-gray-300 leading-relaxed mb-1 last:mb-0">
+                                        {parts.map((part, k) => {
+                                            if (part.startsWith('**') && part.endsWith('**')) {
+                                                return <strong key={k} className="text-gray-100 font-semibold">{part.slice(2, -2)}</strong>
+                                            }
+                                            // Handle list items
+                                            if (part.trim().startsWith('- ') || part.trim().startsWith('• ')) {
+                                                return <span key={k} className="block pl-4 text-gray-400">{part}</span>
+                                            }
+                                            // Handle numbered lists
+                                            if (/^\d+\.\s/.test(part.trim())) {
+                                                return <span key={k} className="block pl-4 text-gray-400">{part}</span>
+                                            }
+                                            return <span key={k}>{part}</span>
+                                        })}
+                                    </p>
+                                )
+                            })}
+                        </div>
+                    ))}
+                </div>
+            )}
         </motion.div>
     )
 }
