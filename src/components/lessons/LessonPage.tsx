@@ -46,7 +46,7 @@ function ContentBlock({ section, index }: { section: ContentSection; index: numb
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 + index * 0.05 }}
             className={cn(
-                'rounded-xl p-6 border',
+                'rounded-xl p-4 sm:p-6 border',
                 style.bg,
                 style.border
             )}
@@ -150,35 +150,35 @@ export function LessonPage() {
             <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center justify-between"
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
             >
                 <div className="flex items-center gap-2 text-sm text-gray-400">
                     <Link to="/" className="hover:text-gray-200 transition-colors">Dashboard</Link>
                     <ChevronRight className="w-4 h-4" />
-                    <span>Week {weekNumber}</span>
-                    <ChevronRight className="w-4 h-4" />
+                    <span className="hidden sm:inline">Week {weekNumber}</span>
+                    <ChevronRight className="w-4 h-4 hidden sm:block" />
                     <span className="text-gray-200">Day {dayNumber}</span>
                 </div>
                 <div className="flex items-center gap-2">
                     {dayNumber > 1 && (
                         <Link
                             to={`/lesson/${dayNumber - 1}`}
-                            className="btn-secondary flex items-center gap-1 text-sm !py-1.5 !px-3"
+                            className="btn-secondary flex items-center gap-1 text-sm !py-2 !px-3 min-h-[44px]"
                         >
                             <ChevronLeft className="w-4 h-4" />
-                            Prev
+                            <span className="hidden xs:inline">Prev</span>
                         </Link>
                     )}
                     {dayNumber < 18 && (
                         <Link
                             to={`/lesson/${dayNumber + 1}`}
                             className={cn(
-                                'flex items-center gap-1 text-sm !py-1.5 !px-3',
+                                'flex items-center gap-1 text-sm !py-2 !px-3 min-h-[44px]',
                                 isLessonUnlocked(dayNumber + 1) ? 'btn-secondary' : 'btn-secondary opacity-50 cursor-not-allowed'
                             )}
                             onClick={e => !isLessonUnlocked(dayNumber + 1) && e.preventDefault()}
                         >
-                            Next
+                            <span className="hidden xs:inline">Next</span>
                             <ChevronRight className="w-4 h-4" />
                         </Link>
                     )}
@@ -191,9 +191,9 @@ export function LessonPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="card bg-gradient-to-r from-primary-900/40 to-primary-800/20 border-primary-700/30"
             >
-                <div className="flex items-start justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                     <div>
-                        <div className="flex items-center gap-2 mb-2">
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
                             <span className="badge-primary">Day {dayNumber}</span>
                             <span className="badge-warning">Week {weekNumber}</span>
                             {isCompleted && (
@@ -203,15 +203,15 @@ export function LessonPage() {
                                 </span>
                             )}
                         </div>
-                        <h1 className="text-3xl font-bold mb-2">{lesson.title}</h1>
-                        <p className="text-gray-400 text-lg">{lesson.description}</p>
+                        <h1 className="text-2xl sm:text-3xl font-bold mb-2">{lesson.title}</h1>
+                        <p className="text-gray-400 text-base sm:text-lg">{lesson.description}</p>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-6 mt-4 pt-4 border-t border-primary-700/20 text-sm text-gray-400">
+                <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-4 pt-4 border-t border-primary-700/20 text-sm text-gray-400">
                     <div className="flex items-center gap-2">
                         <Clock className="w-4 h-4" />
-                        <span>~{lesson.duration} minutes</span>
+                        <span>~{lesson.duration} min</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <BookOpen className="w-4 h-4" />
@@ -219,7 +219,7 @@ export function LessonPage() {
                     </div>
                     <div className="flex items-center gap-2">
                         <Target className="w-4 h-4" />
-                        <span>{lesson.quiz.length} quiz questions</span>
+                        <span>{lesson.quiz.length} questions</span>
                     </div>
                 </div>
 
@@ -227,7 +227,7 @@ export function LessonPage() {
                 {lesson.keyPoints && lesson.keyPoints.length > 0 && (
                     <div className="mt-4 pt-4 border-t border-primary-700/20">
                         <h3 className="text-sm font-semibold text-gray-300 mb-2">Learning Objectives:</h3>
-                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <ul className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                             {lesson.keyPoints.map((point, i) => (
                                 <li key={i} className="flex items-start gap-2 text-sm text-gray-400">
                                     <ChevronRight className="w-4 h-4 text-primary-400 mt-0.5 shrink-0" />
@@ -245,9 +245,9 @@ export function LessonPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg bg-gray-800/30 border border-gray-700/30"
+                    className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 px-4 py-3 rounded-lg bg-gray-800/30 border border-gray-700/30"
                 >
-                    <span className="text-sm text-gray-400">Stocks referenced:</span>
+                    <span className="text-sm text-gray-400 shrink-0">Stocks referenced:</span>
                     <div className="flex gap-2 flex-wrap">
                         {lesson.yourStocks.map(stock => (
                             <span key={stock} className="badge-primary">{stock}</span>
@@ -270,12 +270,12 @@ export function LessonPage() {
                 transition={{ delay: 0.5 }}
                 className="card bg-gradient-to-r from-success-600/10 to-primary-600/10 border-success-600/30"
             >
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
-                        <h3 className="text-xl font-bold mb-1">
+                        <h3 className="text-lg sm:text-xl font-bold mb-1">
                             {isCompleted ? 'Retake the Quiz?' : 'Ready to Test Your Knowledge?'}
                         </h3>
-                        <p className="text-gray-400">
+                        <p className="text-gray-400 text-sm sm:text-base">
                             {isCompleted
                                 ? `You scored ${lessons[dayNumber]?.quizScore || 0}% last time. Try to improve!`
                                 : `Complete the ${lesson.quiz.length}-question quiz to earn XP and unlock the next lesson.`
@@ -284,7 +284,7 @@ export function LessonPage() {
                     </div>
                     <button
                         onClick={() => navigate(`/quiz/${dayNumber}`)}
-                        className="btn-success flex items-center gap-2 text-lg !px-6 !py-3"
+                        className="btn-success flex items-center justify-center gap-2 text-base sm:text-lg !px-6 !py-3 min-h-[48px] w-full sm:w-auto shrink-0"
                     >
                         <Play className="w-5 h-5" />
                         {isCompleted ? 'Retake Quiz' : 'Start Quiz'}

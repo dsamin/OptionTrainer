@@ -45,12 +45,12 @@ export function ProgressPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
             >
-                <h1 className="text-3xl font-bold mb-1">Your Progress</h1>
-                <p className="text-gray-400">Track your options trading learning journey</p>
+                <h1 className="text-2xl sm:text-3xl font-bold mb-1">Your Progress</h1>
+                <p className="text-sm sm:text-base text-gray-400">Track your options trading learning journey</p>
             </motion.div>
 
             {/* Overview Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
                 {[
                     { icon: Target, label: 'Days Complete', value: `${progress.completed}/18`, color: 'text-primary-400', bg: 'bg-primary-600/20' },
                     { icon: Flame, label: 'Current Streak', value: currentStreak, color: 'text-warning-400', bg: 'bg-warning-600/20' },
@@ -64,13 +64,13 @@ export function ProgressPage() {
                         transition={{ delay: 0.1 + i * 0.05 }}
                         className="card"
                     >
-                        <div className="flex items-center gap-3">
-                            <div className={cn('p-3 rounded-lg', stat.bg)}>
-                                <stat.icon className={cn('w-6 h-6', stat.color)} />
+                        <div className="flex items-center gap-2 sm:gap-3">
+                            <div className={cn('p-2 sm:p-3 rounded-lg', stat.bg)}>
+                                <stat.icon className={cn('w-5 h-5 sm:w-6 sm:h-6', stat.color)} />
                             </div>
                             <div>
-                                <p className="text-2xl font-bold">{stat.value}</p>
-                                <p className="text-sm text-gray-500">{stat.label}</p>
+                                <p className="text-xl sm:text-2xl font-bold">{stat.value}</p>
+                                <p className="text-xs sm:text-sm text-gray-500">{stat.label}</p>
                             </div>
                         </div>
                     </motion.div>
@@ -78,16 +78,16 @@ export function ProgressPage() {
             </div>
 
             {/* Additional Stats Row */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                     className="card text-center"
                 >
-                    <TrendingUp className="w-6 h-6 text-primary-400 mx-auto mb-2" />
-                    <p className="text-2xl font-bold">{longestStreak}</p>
-                    <p className="text-sm text-gray-500">Longest Streak</p>
+                    <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-primary-400 mx-auto mb-2" />
+                    <p className="text-xl sm:text-2xl font-bold">{longestStreak}</p>
+                    <p className="text-xs sm:text-sm text-gray-500">Longest Streak</p>
                 </motion.div>
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -95,9 +95,9 @@ export function ProgressPage() {
                     transition={{ delay: 0.35 }}
                     className="card text-center"
                 >
-                    <Clock className="w-6 h-6 text-warning-400 mx-auto mb-2" />
-                    <p className="text-2xl font-bold">{totalTimeMinutes}m</p>
-                    <p className="text-sm text-gray-500">Total Study Time</p>
+                    <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-warning-400 mx-auto mb-2" />
+                    <p className="text-xl sm:text-2xl font-bold">{totalTimeMinutes}m</p>
+                    <p className="text-xs sm:text-sm text-gray-500">Total Study Time</p>
                 </motion.div>
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -105,9 +105,9 @@ export function ProgressPage() {
                     transition={{ delay: 0.4 }}
                     className="card text-center"
                 >
-                    <Award className="w-6 h-6 text-purple-400 mx-auto mb-2" />
-                    <p className="text-2xl font-bold">{achievements.length}/{ACHIEVEMENTS.length}</p>
-                    <p className="text-sm text-gray-500">Achievements</p>
+                    <Award className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400 mx-auto mb-2" />
+                    <p className="text-xl sm:text-2xl font-bold">{achievements.length}/{ACHIEVEMENTS.length}</p>
+                    <p className="text-xs sm:text-sm text-gray-500">Achievements</p>
                 </motion.div>
             </div>
 
@@ -143,7 +143,7 @@ export function ProgressPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
             >
-                <h2 className="text-xl font-bold mb-4">Weekly Breakdown</h2>
+                <h2 className="text-lg sm:text-xl font-bold mb-4">Weekly Breakdown</h2>
                 <div className="space-y-4">
                     {curriculum.map((week) => {
                         const weekProgress = getWeekProgress(week.week)
@@ -151,16 +151,16 @@ export function ProgressPage() {
 
                         return (
                             <div key={week.week} className="card">
-                                <div className="flex items-center justify-between mb-3">
-                                    <div className="flex items-center gap-3">
-                                        <span className="text-2xl">{week.icon}</span>
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                                    <div className="flex items-center gap-2 sm:gap-3">
+                                        <span className="text-xl sm:text-2xl">{week.icon}</span>
                                         <div>
-                                            <h3 className="font-semibold">Week {week.week}: {week.title}</h3>
-                                            <p className="text-sm text-gray-500">{week.description}</p>
+                                            <h3 className="font-semibold text-sm sm:text-base">Week {week.week}: {week.title}</h3>
+                                            <p className="text-xs sm:text-sm text-gray-500">{week.description}</p>
                                         </div>
                                     </div>
                                     <span className={cn(
-                                        'font-bold',
+                                        'font-bold text-sm sm:text-base',
                                         weekPercent === 100 ? 'text-success-400' : 'text-gray-400'
                                     )}>
                                         {weekProgress.completed}/6
@@ -177,7 +177,7 @@ export function ProgressPage() {
                                 </div>
 
                                 {/* Day details */}
-                                <div className="grid grid-cols-6 gap-2">
+                                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                                     {week.days.map((day) => {
                                         const lesson = lessons[day.day]
                                         const isCompleted = lesson?.completed
@@ -188,7 +188,7 @@ export function ProgressPage() {
                                                 key={day.day}
                                                 to={`/lesson/${day.day}`}
                                                 className={cn(
-                                                    'relative p-2 rounded-lg text-center transition-all text-xs',
+                                                    'relative p-2 sm:p-2 rounded-lg text-center transition-all text-xs min-h-[44px] flex flex-col items-center justify-center',
                                                     isCompleted && 'bg-success-600/20 border border-success-600/30',
                                                     isCurrent && !isCompleted && 'bg-primary-600/20 border border-primary-600/30',
                                                     !isCompleted && !isCurrent && 'bg-gray-800/50 border border-gray-700/30 hover:bg-gray-800'
@@ -221,8 +221,8 @@ export function ProgressPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
             >
-                <h2 className="text-xl font-bold mb-4">Achievements</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <h2 className="text-lg sm:text-xl font-bold mb-4">Achievements</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                     {ACHIEVEMENTS.map((achievement) => {
                         const isUnlocked = achievements.includes(achievement.id)
 
@@ -232,24 +232,24 @@ export function ProgressPage() {
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 className={cn(
-                                    'card flex items-center gap-4',
+                                    'card flex items-center gap-3 sm:gap-4',
                                     isUnlocked
                                         ? 'bg-gradient-to-r from-primary-900/30 to-success-600/10 border-primary-700/30'
                                         : 'opacity-50'
                                 )}
                             >
                                 <div className={cn(
-                                    'text-3xl',
+                                    'text-2xl sm:text-3xl shrink-0',
                                     !isUnlocked && 'grayscale'
                                 )}>
                                     {isUnlocked ? achievement.icon : '🔒'}
                                 </div>
-                                <div>
-                                    <p className="font-semibold">{achievement.name}</p>
-                                    <p className="text-sm text-gray-500">{achievement.description}</p>
+                                <div className="min-w-0 flex-1">
+                                    <p className="font-semibold text-sm sm:text-base">{achievement.name}</p>
+                                    <p className="text-xs sm:text-sm text-gray-500">{achievement.description}</p>
                                 </div>
                                 {isUnlocked && (
-                                    <CheckCircle2 className="w-5 h-5 text-success-400 ml-auto shrink-0" />
+                                    <CheckCircle2 className="w-5 h-5 text-success-400 shrink-0" />
                                 )}
                             </motion.div>
                         )
