@@ -9,28 +9,30 @@ import {
   Gamepad2,
   LogOut,
   X,
+  BarChart3,
 } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { useProgressStore } from '../../stores/progressStore'
 import { useUserStore } from '../../stores/userStore'
 import { curriculum } from '../../data/curriculum'
 
-import devanImg   from '../../Images/Devan.PNG'
-import nandaImg   from '../../Images/Nanda.PNG'
-import sriharImg  from '../../Images/Srihari.PNG'
+import devanImg from '../../Images/Devan.PNG'
+import nandaImg from '../../Images/Nanda.PNG'
+import sriharImg from '../../Images/Srihari.PNG'
 
 const AVATAR_MAP: Record<string, string> = {
-  'Devan.PNG':   devanImg,
-  'Nanda.PNG':   nandaImg,
+  'Devan.PNG': devanImg,
+  'Nanda.PNG': nandaImg,
   'Srihari.PNG': sriharImg,
 }
 
 const navItems = [
-  { to: '/',         icon: LayoutDashboard, label: 'Dashboard' },
-  { to: '/progress', icon: Trophy,          label: 'Progress'  },
-  { to: '/gamehub',  icon: Gamepad2,        label: 'Game Hub'  },
-  { to: '/stocks',   icon: TrendingUp,      label: 'Stocks'    },
-  { to: '/settings', icon: Settings,        label: 'Settings'  },
+  { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/progress', icon: Trophy, label: 'Progress' },
+  { to: '/gamehub', icon: Gamepad2, label: 'Game Hub' },
+  { to: '/simulator', icon: BarChart3, label: 'Simulator' },
+  { to: '/stocks', icon: TrendingUp, label: 'Stocks' },
+  { to: '/settings', icon: Settings, label: 'Settings' },
 ]
 
 interface SidebarProps {
@@ -40,7 +42,7 @@ interface SidebarProps {
 
 export function Sidebar({ isMobile = false, onClose }: SidebarProps) {
   const location = useLocation()
-  const navigate  = useNavigate()
+  const navigate = useNavigate()
   const { lessons, getCurrentDay, isLessonUnlocked } = useProgressStore()
   const { currentUser, logout } = useUserStore()
   const currentDay = getCurrentDay()
