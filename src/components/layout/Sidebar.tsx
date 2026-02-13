@@ -8,6 +8,7 @@ import {
   ChevronRight,
   Gamepad2,
   LogOut,
+  X,
 } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { useProgressStore } from '../../stores/progressStore'
@@ -32,7 +33,12 @@ const navItems = [
   { to: '/settings', icon: Settings,        label: 'Settings'  },
 ]
 
-export function Sidebar() {
+interface SidebarProps {
+  isMobile?: boolean
+  onClose?: () => void
+}
+
+export function Sidebar({ isMobile = false, onClose }: SidebarProps) {
   const location = useLocation()
   const navigate  = useNavigate()
   const { lessons, getCurrentDay, isLessonUnlocked } = useProgressStore()
@@ -42,20 +48,43 @@ export function Sidebar() {
   const handleLogout = () => {
     logout()
     navigate('/')
+    onClose?.()
+  }
+
+  const handleNavClick = () => {
+    // Close sidebar on mobile after navigation
+    if (isMobile) {
+      onClose?.()
+    }
   }
 
   return (
-    <aside className="w-72 bg-gray-900/50 border-r border-gray-800 flex flex-col">
-      {/* Logo + User */}
+    <aside className={cn(
+      'bg-gray-900/50 border-r border-gray-800 flex flex-col h-full',
+      isMobile ? 'w-72' : 'w-72'
+    )}>
+      {/* Logo + User + Mobile Close Button */}
       <div className="p-4 border-b border-gray-800">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center flex-shrink-0">
-            <TrendingUp className="w-5 h-5 text-white" />
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center flex-shrink-0">
+              <TrendingUp className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h1 className="font-bold text-base">OptionTrainer</h1>
+              <p className="text-xs text-gray-500">Master Options Trading</p>
+            </div>
           </div>
-          <div>
-            <h1 className="font-bold text-base">OptionTrainer</h1>
-            <p className="text-xs text-gray-500">Master Options Trading</p>
-          </div>
+          {/* Mobile Close Button */}
+          {isMobile && (
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+              aria-label="Close sidebar"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
         </div>
         {currentUser && (
           <div className="flex items-center justify-between bg-gray-800/60 rounded-xl px-3 py-2">
@@ -87,6 +116,7 @@ export function Sidebar() {
           <NavLink
             key={item.to}
             to={item.to}
+            onClick={handleNavClick}
             className={({ isActive }) =>
               cn(
                 'flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200',
@@ -125,6 +155,13 @@ export function Sidebar() {
                     <NavLink
                       key={day.day}
                       to={isUnlocked ? `/lesson/${day.day}` : '#'}
+                      onClick={(e) => {
+                        if (!isUnlocked) {
+                          e.preventDefault()
+                        } else {
+                          handleNavClick()
+                        }
+                      }}
                       className={cn(
                         'flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-all',
                         isActive && 'bg-primary-600/20 text-primary-400',
@@ -133,7 +170,6 @@ export function Sidebar() {
                         !isUnlocked && 'text-gray-600 cursor-not-allowed',
                         isUnlocked && !isActive && !isCurrent && !isCompleted && 'text-gray-400 hover:text-gray-100 hover:bg-gray-800'
                       )}
-                      onClick={(e) => !isUnlocked && e.preventDefault()}
                     >
                       <div
                         className={cn(

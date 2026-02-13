@@ -45,17 +45,17 @@ export function SettingsPage() {
     }
 
     return (
-        <div className="max-w-3xl mx-auto space-y-6 pb-12">
+        <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6 pb-12 px-4 sm:px-0">
             {/* Header */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
             >
                 <div className="flex items-center gap-3 mb-1">
-                    <Settings className="w-8 h-8 text-gray-400" />
-                    <h1 className="text-3xl font-bold">Settings</h1>
+                    <Settings className="w-7 h-7 sm:w-8 sm:h-8 text-gray-400" />
+                    <h1 className="text-2xl sm:text-3xl font-bold">Settings</h1>
                 </div>
-                <p className="text-gray-400">Customize your learning experience</p>
+                <p className="text-sm sm:text-base text-gray-400">Customize your learning experience</p>
             </motion.div>
 
             {/* Appearance */}
@@ -70,16 +70,16 @@ export function SettingsPage() {
                     <h2 className="text-lg font-semibold">Appearance</h2>
                 </div>
 
-                <div className="flex items-center justify-between py-3">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-3">
                     <div>
                         <p className="font-medium">Theme</p>
                         <p className="text-sm text-gray-500">Choose between dark and light mode</p>
                     </div>
-                    <div className="flex items-center gap-2 bg-gray-800 rounded-lg p-1">
+                    <div className="flex items-center gap-2 bg-gray-800 rounded-lg p-1 self-start sm:self-auto">
                         <button
                             onClick={() => setTheme('dark')}
                             className={cn(
-                                'flex items-center gap-2 px-4 py-2 rounded-md transition-all',
+                                'flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-2 rounded-md transition-all min-h-[44px]',
                                 theme === 'dark'
                                     ? 'bg-primary-600 text-white'
                                     : 'text-gray-400 hover:text-gray-200'
@@ -91,7 +91,7 @@ export function SettingsPage() {
                         <button
                             onClick={() => setTheme('light')}
                             className={cn(
-                                'flex items-center gap-2 px-4 py-2 rounded-md transition-all',
+                                'flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-2 rounded-md transition-all min-h-[44px]',
                                 theme === 'light'
                                     ? 'bg-primary-600 text-white'
                                     : 'text-gray-400 hover:text-gray-200'
@@ -117,14 +117,14 @@ export function SettingsPage() {
                 </div>
 
                 {/* Sound */}
-                <div className="flex items-center justify-between py-4 border-b border-gray-800">
-                    <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between gap-4 py-4 border-b border-gray-800">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
                         {soundEnabled ? (
-                            <Volume2 className="w-5 h-5 text-success-400" />
+                            <Volume2 className="w-5 h-5 text-success-400 flex-shrink-0" />
                         ) : (
-                            <VolumeX className="w-5 h-5 text-gray-500" />
+                            <VolumeX className="w-5 h-5 text-gray-500 flex-shrink-0" />
                         )}
-                        <div>
+                        <div className="min-w-0">
                             <p className="font-medium">Sound Effects</p>
                             <p className="text-sm text-gray-500">Audio feedback for quiz answers</p>
                         </div>
@@ -132,28 +132,29 @@ export function SettingsPage() {
                     <button
                         onClick={toggleSound}
                         className={cn(
-                            'relative w-14 h-7 rounded-full transition-colors duration-200',
+                            'relative w-14 h-8 rounded-full transition-colors duration-200 flex-shrink-0',
                             soundEnabled ? 'bg-primary-600' : 'bg-gray-700'
                         )}
+                        aria-label={soundEnabled ? 'Disable sound' : 'Enable sound'}
                     >
                         <div
                             className={cn(
-                                'absolute top-0.5 w-6 h-6 bg-white rounded-full transition-all duration-200 shadow-md',
-                                soundEnabled ? 'left-7' : 'left-0.5'
+                                'absolute top-1 w-6 h-6 bg-white rounded-full transition-all duration-200 shadow-md',
+                                soundEnabled ? 'left-7' : 'left-1'
                             )}
                         />
                     </button>
                 </div>
 
                 {/* Notifications */}
-                <div className="flex items-center justify-between py-4 border-b border-gray-800">
-                    <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between gap-4 py-4 border-b border-gray-800">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
                         {notificationsEnabled ? (
-                            <Bell className="w-5 h-5 text-success-400" />
+                            <Bell className="w-5 h-5 text-success-400 flex-shrink-0" />
                         ) : (
-                            <BellOff className="w-5 h-5 text-gray-500" />
+                            <BellOff className="w-5 h-5 text-gray-500 flex-shrink-0" />
                         )}
-                        <div>
+                        <div className="min-w-0">
                             <p className="font-medium">Notifications</p>
                             <p className="text-sm text-gray-500">Daily study reminders</p>
                         </div>
@@ -161,33 +162,34 @@ export function SettingsPage() {
                     <button
                         onClick={toggleNotifications}
                         className={cn(
-                            'relative w-14 h-7 rounded-full transition-colors duration-200',
+                            'relative w-14 h-8 rounded-full transition-colors duration-200 flex-shrink-0',
                             notificationsEnabled ? 'bg-primary-600' : 'bg-gray-700'
                         )}
+                        aria-label={notificationsEnabled ? 'Disable notifications' : 'Enable notifications'}
                     >
                         <div
                             className={cn(
-                                'absolute top-0.5 w-6 h-6 bg-white rounded-full transition-all duration-200 shadow-md',
-                                notificationsEnabled ? 'left-7' : 'left-0.5'
+                                'absolute top-1 w-6 h-6 bg-white rounded-full transition-all duration-200 shadow-md',
+                                notificationsEnabled ? 'left-7' : 'left-1'
                             )}
                         />
                     </button>
                 </div>
 
                 {/* Preferred Stock */}
-                <div className="flex items-center justify-between py-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-4">
                     <div className="flex items-center gap-3">
-                        <TrendingUp className="w-5 h-5 text-primary-400" />
+                        <TrendingUp className="w-5 h-5 text-primary-400 flex-shrink-0" />
                         <div>
                             <p className="font-medium">Preferred Stock</p>
                             <p className="text-sm text-gray-500">Used in lesson examples</p>
                         </div>
                     </div>
-                    <div className="relative">
+                    <div className="relative w-full sm:w-auto">
                         <select
                             value={preferredStock}
                             onChange={(e) => setPreferredStock(e.target.value as WatchedStock)}
-                            className="appearance-none bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 pr-10 text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 cursor-pointer"
+                            className="appearance-none w-full sm:w-auto bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 sm:py-2 pr-10 text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 cursor-pointer min-h-[44px]"
                         >
                             {WATCHED_STOCKS.map(stock => (
                                 <option key={stock.symbol} value={stock.symbol}>
@@ -212,7 +214,7 @@ export function SettingsPage() {
                     <h2 className="text-lg font-semibold text-danger-400">Danger Zone</h2>
                 </div>
 
-                <div className="flex items-center justify-between py-3">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-3">
                     <div>
                         <p className="font-medium">Reset Progress</p>
                         <p className="text-sm text-gray-500">
@@ -228,7 +230,7 @@ export function SettingsPage() {
                             onClick={() => setShowResetConfirm(true)}
                             disabled={progress.completed === 0}
                             className={cn(
-                                'flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all border',
+                                'flex items-center justify-center gap-2 px-4 py-3 sm:py-2 rounded-lg font-medium transition-all border min-h-[44px] self-start sm:self-auto',
                                 progress.completed > 0
                                     ? 'border-danger-400/50 text-danger-400 hover:bg-danger-400/10'
                                     : 'border-gray-700 text-gray-600 cursor-not-allowed'
@@ -238,18 +240,18 @@ export function SettingsPage() {
                             Reset
                         </button>
                     ) : resetConfirmed ? (
-                        <span className="text-success-400 font-medium">✓ Progress Reset</span>
+                        <span className="text-success-400 font-medium">Progress Reset</span>
                     ) : (
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
                             <button
                                 onClick={() => setShowResetConfirm(false)}
-                                className="btn-secondary text-sm"
+                                className="btn-secondary text-sm min-h-[44px] order-2 sm:order-1"
                             >
                                 Cancel
                             </button>
                             <button
                                 onClick={handleReset}
-                                className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium bg-danger-500 text-white hover:bg-danger-400 transition-all"
+                                className="flex items-center justify-center gap-2 px-4 py-3 sm:py-2 rounded-lg font-medium bg-danger-500 text-white hover:bg-danger-400 transition-all min-h-[44px] order-1 sm:order-2"
                             >
                                 <AlertTriangle className="w-4 h-4" />
                                 Confirm Reset

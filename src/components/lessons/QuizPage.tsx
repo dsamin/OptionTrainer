@@ -118,38 +118,38 @@ export function QuizPage() {
     if (showResults) {
         const xpEarned = 100 + Math.round((score / 100) * 50)
         return (
-            <div className="max-w-2xl mx-auto space-y-6 pb-12">
+            <div className="max-w-2xl mx-auto space-y-6 pb-12 px-2 sm:px-0">
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="card text-center"
+                    className="card text-center p-4 sm:p-6"
                 >
                     <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-                        className="text-7xl mb-4"
+                        className="text-5xl sm:text-7xl mb-4"
                     >
                         {score >= 80 ? '🎉' : score >= 60 ? '👍' : '📚'}
                     </motion.div>
 
-                    <h1 className="text-3xl font-bold mb-2">
+                    <h1 className="text-2xl sm:text-3xl font-bold mb-2">
                         {score === 100 ? 'Perfect Score!' : score >= 80 ? 'Great Job!' : score >= 60 ? 'Good Effort!' : 'Keep Studying!'}
                     </h1>
 
-                    <p className="text-gray-400 text-lg mb-6">
+                    <p className="text-gray-400 text-base sm:text-lg mb-6">
                         Day {dayNumber}: {lesson.title}
                     </p>
 
                     {/* Score Circle */}
                     <div className="flex justify-center mb-6">
                         <div className={cn(
-                            'w-32 h-32 rounded-full flex flex-col items-center justify-center border-4',
+                            'w-28 h-28 sm:w-32 sm:h-32 rounded-full flex flex-col items-center justify-center border-4',
                             score >= 80 ? 'border-success-500 bg-success-900/20' :
                                 score >= 60 ? 'border-warning-500 bg-warning-900/20' :
                                     'border-danger-400 bg-danger-400/10'
                         )}>
-                            <span className="text-4xl font-bold">{score}%</span>
+                            <span className="text-3xl sm:text-4xl font-bold">{score}%</span>
                             <span className="text-sm text-gray-400">{correctCount}/{totalQuestions}</span>
                         </div>
                     </div>
@@ -159,22 +159,22 @@ export function QuizPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
-                        className="flex items-center justify-center gap-2 text-xl mb-6"
+                        className="flex items-center justify-center gap-2 text-lg sm:text-xl mb-6"
                     >
-                        <Zap className="w-6 h-6 text-primary-400" />
+                        <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-primary-400" />
                         <span className="font-bold text-primary-400">+{xpEarned} XP</span>
                         <span className="text-gray-500">earned</span>
                     </motion.div>
 
                     {/* Question Summary */}
-                    <div className="grid grid-cols-5 gap-2 mb-6 max-w-xs mx-auto">
+                    <div className="flex flex-wrap justify-center gap-2 mb-6 max-w-sm mx-auto">
                         {quiz.map((q, i) => {
                             const isCorrect = answers[i]?.selected === q.correctAnswer
                             return (
                                 <div
                                     key={i}
                                     className={cn(
-                                        'w-10 h-10 rounded-lg flex items-center justify-center text-sm font-medium',
+                                        'w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center text-sm font-medium',
                                         isCorrect ? 'bg-success-600/30 text-success-400' : 'bg-danger-400/20 text-danger-400'
                                     )}
                                 >
@@ -185,24 +185,24 @@ export function QuizPage() {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex items-center justify-center gap-3">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                         {score < 100 && (
-                            <button onClick={handleRetry} className="btn-secondary flex items-center gap-2">
+                            <button onClick={handleRetry} className="btn-secondary flex items-center justify-center gap-2 w-full sm:w-auto min-h-[48px]">
                                 <RotateCcw className="w-4 h-4" />
                                 Retry Quiz
                             </button>
                         )}
-                        <Link to={`/lesson/${dayNumber}`} className="btn-secondary flex items-center gap-2">
+                        <Link to={`/lesson/${dayNumber}`} className="btn-secondary flex items-center justify-center gap-2 w-full sm:w-auto min-h-[48px]">
                             <ChevronLeft className="w-4 h-4" />
                             Review Lesson
                         </Link>
                         {dayNumber < 18 ? (
-                            <Link to={`/lesson/${dayNumber + 1}`} className="btn-primary flex items-center gap-2">
+                            <Link to={`/lesson/${dayNumber + 1}`} className="btn-primary flex items-center justify-center gap-2 w-full sm:w-auto min-h-[48px]">
                                 Next Lesson
                                 <ArrowRight className="w-4 h-4" />
                             </Link>
                         ) : (
-                            <Link to="/progress" className="btn-primary flex items-center gap-2">
+                            <Link to="/progress" className="btn-primary flex items-center justify-center gap-2 w-full sm:w-auto min-h-[48px]">
                                 <Trophy className="w-4 h-4" />
                                 View Progress
                             </Link>
@@ -219,18 +219,18 @@ export function QuizPage() {
     const diffStyle = difficultyColors[question.difficulty]
 
     return (
-        <div className="max-w-3xl mx-auto space-y-6 pb-12">
+        <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6 pb-12 px-1 sm:px-0">
             {/* Header */}
             <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center justify-between"
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0"
             >
                 <div className="flex items-center gap-2 text-sm text-gray-400">
-                    <Link to={`/lesson/${dayNumber}`} className="hover:text-gray-200 transition-colors">
+                    <Link to={`/lesson/${dayNumber}`} className="hover:text-gray-200 transition-colors truncate max-w-[200px] sm:max-w-none">
                         Day {dayNumber}: {lesson.title}
                     </Link>
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-4 h-4 shrink-0" />
                     <span className="text-gray-200">Quiz</span>
                 </div>
                 <div className="flex items-center gap-3">
@@ -260,19 +260,19 @@ export function QuizPage() {
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -30 }}
-                    className="card"
+                    className="card p-4 sm:p-6"
                 >
-                    <div className="flex items-start gap-3 mb-6">
+                    <div className="flex items-start gap-3 mb-4 sm:mb-6">
                         <div className="p-2 rounded-lg bg-primary-600/20 shrink-0">
-                            <HelpCircle className="w-6 h-6 text-primary-400" />
+                            <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary-400" />
                         </div>
-                        <h2 className="text-xl font-semibold leading-relaxed">
+                        <h2 className="text-lg sm:text-xl font-semibold leading-relaxed">
                             {question.question}
                         </h2>
                     </div>
 
                     {/* Options */}
-                    <div className="space-y-3">
+                    <div className="space-y-2 sm:space-y-3">
                         {question.options.map((option, i) => {
                             const isSelected = answer?.selected === i
                             const isCorrectOption = i === question.correctAnswer
@@ -288,9 +288,9 @@ export function QuizPage() {
                                     onClick={() => handleSelect(i)}
                                     disabled={answer?.confirmed}
                                     className={cn(
-                                        'w-full text-left p-4 rounded-xl border transition-all duration-200',
+                                        'w-full text-left p-3 sm:p-4 rounded-xl border transition-all duration-200 min-h-[52px]',
                                         !answer?.confirmed && isSelected && 'bg-primary-900/30 border-primary-600/50 text-gray-100',
-                                        !answer?.confirmed && !isSelected && 'bg-gray-800/30 border-gray-700/30 text-gray-300 hover:bg-gray-800/60 hover:border-gray-600/50',
+                                        !answer?.confirmed && !isSelected && 'bg-gray-800/30 border-gray-700/30 text-gray-300 hover:bg-gray-800/60 hover:border-gray-600/50 active:bg-gray-800/80',
                                         showCorrect && 'bg-success-600/20 border-success-500/50 text-success-300',
                                         showWrong && 'bg-danger-400/10 border-danger-400/50 text-danger-400',
                                         answer?.confirmed && !showCorrect && !showWrong && 'opacity-50'
@@ -308,7 +308,7 @@ export function QuizPage() {
                                                 showWrong ? <XCircle className="w-4 h-4" /> :
                                                     String.fromCharCode(65 + i)}
                                         </div>
-                                        <span className="flex-1">{option}</span>
+                                        <span className="flex-1 text-sm sm:text-base">{option}</span>
                                     </div>
                                 </motion.button>
                             )
@@ -352,17 +352,17 @@ export function QuizPage() {
             </AnimatePresence>
 
             {/* Actions */}
-            <div className="flex items-center justify-between">
-                <div className="text-sm text-gray-500">
+            <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div className="text-sm text-gray-500 text-center sm:text-left">
                     Score so far: {correctCount}/{answers.filter(a => a.confirmed).length || 0} correct
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center sm:justify-end gap-3">
                     {!answer?.confirmed ? (
                         <button
                             onClick={handleConfirm}
                             disabled={answer?.selected === null || answer?.selected === undefined}
                             className={cn(
-                                'btn-primary flex items-center gap-2',
+                                'btn-primary flex items-center justify-center gap-2 min-h-[48px] w-full sm:w-auto',
                                 (answer?.selected === null || answer?.selected === undefined) && 'opacity-50 cursor-not-allowed'
                             )}
                         >
@@ -370,7 +370,7 @@ export function QuizPage() {
                             <CheckCircle2 className="w-4 h-4" />
                         </button>
                     ) : (
-                        <button onClick={handleNext} className="btn-primary flex items-center gap-2">
+                        <button onClick={handleNext} className="btn-primary flex items-center justify-center gap-2 min-h-[48px] w-full sm:w-auto">
                             {currentQuestion < totalQuestions - 1 ? (
                                 <>
                                     Next Question

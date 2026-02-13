@@ -44,15 +44,15 @@ export default function TrophyCabinet({ unlockedIds }: TrophyCabinetProps) {
     <div>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <span className="text-lg">🏆</span>
-          <h2 className="text-lg font-bold text-white">Trophy Cabinet</h2>
+          <span className="text-base sm:text-lg">🏆</span>
+          <h2 className="text-base sm:text-lg font-bold text-white">Trophy Cabinet</h2>
         </div>
-        <span className="text-sm text-gray-500">
+        <span className="text-xs sm:text-sm text-gray-500">
           <span className="text-white font-bold">{unlockedCount}</span>/{ACHIEVEMENT_DEFS.length} unlocked
         </span>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
         {ACHIEVEMENT_DEFS.map((def, i) => {
           const isUnlocked = unlocked.has(def.id);
           const cfg = RARITY_CONFIG[def.rarity];
@@ -64,16 +64,16 @@ export default function TrophyCabinet({ unlockedIds }: TrophyCabinetProps) {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: i * 0.04 }}
               className={cn(
-                'relative rounded-xl border p-3 flex flex-col items-center text-center transition-all duration-300',
+                'relative rounded-xl border p-2.5 sm:p-3 flex flex-col items-center text-center transition-all duration-300 min-h-[100px] sm:min-h-[120px]',
                 isUnlocked
                   ? `${cfg.border} ${cfg.bg} shadow-lg ${cfg.glow}`
                   : 'border-gray-800 bg-gray-900/40 opacity-50 grayscale',
               )}
-              title={isUnlocked ? def.description : `🔒 ${def.description}`}
+              title={isUnlocked ? def.description : `Locked: ${def.description}`}
             >
               {/* Rarity label */}
               {isUnlocked && (
-                <span className={cn('absolute top-1.5 right-1.5 text-xs px-1.5 py-0.5 rounded-full font-medium', cfg.label)}>
+                <span className={cn('absolute top-1 right-1 sm:top-1.5 sm:right-1.5 text-[10px] sm:text-xs px-1 sm:px-1.5 py-0.5 rounded-full font-medium', cfg.label)}>
                   {cfg.labelText}
                 </span>
               )}
@@ -82,15 +82,15 @@ export default function TrophyCabinet({ unlockedIds }: TrophyCabinetProps) {
               <motion.div
                 animate={isUnlocked ? { rotate: [0, -5, 5, 0] } : {}}
                 transition={{ duration: 0.4, delay: i * 0.05 + 0.2 }}
-                className="text-3xl mb-2 mt-1"
+                className="text-2xl sm:text-3xl mb-1.5 sm:mb-2 mt-1"
               >
                 {isUnlocked ? def.icon : '🔒'}
               </motion.div>
 
-              <p className="text-xs font-bold text-white leading-tight mb-1">{def.title}</p>
+              <p className="text-[10px] sm:text-xs font-bold text-white leading-tight mb-1 line-clamp-2">{def.title}</p>
 
               {isUnlocked && (
-                <span className="text-xs text-yellow-500 font-medium">+{def.xpReward} XP</span>
+                <span className="text-[10px] sm:text-xs text-yellow-500 font-medium">+{def.xpReward} XP</span>
               )}
             </motion.div>
           );

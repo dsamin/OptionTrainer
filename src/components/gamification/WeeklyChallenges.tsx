@@ -57,20 +57,23 @@ export default function WeeklyChallenges({ userId, onXpGained }: WeeklyChallenge
   return (
     <div>
       <div className="flex items-center gap-2 mb-4">
-        <span className="text-lg">⚡</span>
-        <h2 className="text-lg font-bold text-white">Weekly Challenges</h2>
+        <span className="text-base sm:text-lg">⚡</span>
+        <h2 className="text-base sm:text-lg font-bold text-white">Weekly Challenges</h2>
       </div>
 
-      <div className="space-y-5">
+      <div className="space-y-4 sm:space-y-5">
         {byWeek.map(({ week, challenges: wc }) => {
           const completedCount = wc.filter(c => c.completed).length;
 
           return (
             <div key={week}>
               <div className="flex items-center gap-2 mb-2">
-                <span>{WEEK_ICONS[week]}</span>
-                <span className="text-sm font-semibold text-gray-400">Week {week} · {WEEK_LABELS[week]}</span>
-                <span className="ml-auto text-xs text-gray-600">{completedCount}/{wc.length}</span>
+                <span className="text-sm sm:text-base">{WEEK_ICONS[week]}</span>
+                <span className="text-xs sm:text-sm font-semibold text-gray-400">
+                  <span className="hidden sm:inline">Week {week} · {WEEK_LABELS[week]}</span>
+                  <span className="sm:hidden">W{week} · {WEEK_LABELS[week]}</span>
+                </span>
+                <span className="ml-auto text-[10px] sm:text-xs text-gray-600">{completedCount}/{wc.length}</span>
               </div>
 
               <div className="space-y-2">
@@ -82,10 +85,10 @@ export default function WeeklyChallenges({ userId, onXpGained }: WeeklyChallenge
                     transition={{ delay: i * 0.05 }}
                     onClick={() => handleComplete(challenge)}
                     className={cn(
-                      'flex items-center gap-3 p-3 rounded-xl border transition-all',
+                      'flex items-center gap-2 sm:gap-3 p-3 sm:p-3 rounded-xl border transition-all min-h-[56px] sm:min-h-[48px]',
                       challenge.completed
                         ? 'bg-green-900/20 border-green-700/40 cursor-default'
-                        : 'bg-gray-900/50 border-gray-800 hover:border-indigo-700/50 hover:bg-indigo-900/10 cursor-pointer',
+                        : 'bg-gray-900/50 border-gray-800 hover:border-indigo-700/50 hover:bg-indigo-900/10 cursor-pointer active:bg-indigo-900/20',
                     )}
                   >
                     {challenge.completed ? (
@@ -95,15 +98,15 @@ export default function WeeklyChallenges({ userId, onXpGained }: WeeklyChallenge
                     )}
 
                     <div className="flex-1 min-w-0">
-                      <p className={cn('text-sm font-semibold leading-tight', challenge.completed ? 'text-green-300' : 'text-white')}>
+                      <p className={cn('text-xs sm:text-sm font-semibold leading-tight', challenge.completed ? 'text-green-300' : 'text-white')}>
                         {challenge.title}
                       </p>
-                      <p className="text-xs text-gray-500 leading-tight">{challenge.description}</p>
+                      <p className="text-[10px] sm:text-xs text-gray-500 leading-tight line-clamp-1 sm:line-clamp-none">{challenge.description}</p>
                     </div>
 
                     <div className="flex items-center gap-1 flex-shrink-0">
-                      <Zap className="w-3.5 h-3.5 text-yellow-400" />
-                      <span className={cn('text-xs font-bold', challenge.completed ? 'text-gray-500 line-through' : 'text-yellow-400')}>
+                      <Zap className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-yellow-400" />
+                      <span className={cn('text-[10px] sm:text-xs font-bold', challenge.completed ? 'text-gray-500 line-through' : 'text-yellow-400')}>
                         +{challenge.xp_reward}
                       </span>
                     </div>
@@ -112,7 +115,7 @@ export default function WeeklyChallenges({ userId, onXpGained }: WeeklyChallenge
                       <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ duration: 0.6, repeat: Infinity, ease: 'linear' }}
-                        className="w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full"
+                        className="w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full flex-shrink-0"
                       />
                     )}
                   </motion.div>

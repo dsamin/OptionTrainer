@@ -45,7 +45,7 @@ export default function Leaderboard() {
     <div className="space-y-3">
       <div className="flex items-center gap-2 mb-4">
         <Trophy className="w-5 h-5 text-amber-400" />
-        <h2 className="text-lg font-bold text-white">Leaderboard</h2>
+        <h2 className="text-base sm:text-lg font-bold text-white">Leaderboard</h2>
       </div>
 
       {entries.map((entry, i) => {
@@ -59,14 +59,14 @@ export default function Leaderboard() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.1 }}
             className={cn(
-              'relative rounded-2xl border p-4 bg-gradient-to-r shadow-lg',
+              'relative rounded-2xl border p-3 sm:p-4 bg-gradient-to-r shadow-lg',
               rank.bg, rank.border, rank.glow,
             )}
           >
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               {/* Rank medal */}
-              <div className="flex-shrink-0 w-10 text-center">
-                <span className="text-2xl">{rank.medal}</span>
+              <div className="flex-shrink-0 w-8 sm:w-10 text-center">
+                <span className="text-xl sm:text-2xl">{rank.medal}</span>
               </div>
 
               {/* Avatar */}
@@ -74,22 +74,22 @@ export default function Leaderboard() {
                 <img
                   src={AVATAR_MAP[entry.avatar]}
                   alt={entry.name}
-                  className="w-12 h-12 rounded-full object-cover border-2 border-gray-700"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-gray-700"
                 />
-                <div className="absolute -bottom-1 -right-1 bg-gray-800 rounded-full px-1.5 py-0.5 text-xs font-bold text-indigo-400 border border-gray-700">
+                <div className="absolute -bottom-1 -right-1 bg-gray-800 rounded-full px-1 sm:px-1.5 py-0.5 text-[10px] sm:text-xs font-bold text-indigo-400 border border-gray-700">
                   {entry.level}
                 </div>
               </div>
 
               {/* Name + level */}
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="font-bold text-white text-sm">{entry.name}</span>
-                  <span className="text-xs text-gray-500">{entry.level_name}</span>
+                <div className="flex flex-wrap items-center gap-1 sm:gap-2 mb-1">
+                  <span className="font-bold text-white text-xs sm:text-sm truncate">{entry.name}</span>
+                  <span className="text-[10px] sm:text-xs text-gray-500 hidden sm:inline">{entry.level_name}</span>
                 </div>
 
                 {/* Progress bar */}
-                <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden mb-2">
+                <div className="h-1 sm:h-1.5 bg-gray-800 rounded-full overflow-hidden mb-1.5 sm:mb-2">
                   <motion.div
                     className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
                     initial={{ width: 0 }}
@@ -98,27 +98,38 @@ export default function Leaderboard() {
                   />
                 </div>
 
-                <div className="flex items-center gap-3 text-xs text-gray-500">
-                  <span>{entry.lessons_completed}/18 lessons</span>
-                  <span>•</span>
-                  <span>Avg {entry.average_quiz_score}%</span>
+                <div className="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-xs text-gray-500">
+                  <span>{entry.lessons_completed}/18</span>
+                  <span className="hidden sm:inline">•</span>
+                  <span className="hidden sm:inline">Avg {entry.average_quiz_score}%</span>
                 </div>
               </div>
 
-              {/* Stats */}
-              <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
+              {/* Stats - collapsed on mobile */}
+              <div className="flex flex-col items-end gap-1 sm:gap-1.5 flex-shrink-0">
                 <div className="flex items-center gap-1">
-                  <Zap className="w-3.5 h-3.5 text-yellow-400" />
-                  <span className="text-sm font-bold text-white">{entry.total_xp.toLocaleString()}</span>
-                  <span className="text-xs text-gray-600">XP</span>
+                  <Zap className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-yellow-400" />
+                  <span className="text-xs sm:text-sm font-bold text-white">{entry.total_xp.toLocaleString()}</span>
+                  <span className="text-[10px] sm:text-xs text-gray-600 hidden sm:inline">XP</span>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="hidden sm:flex items-center gap-1">
                   <Flame className={cn('w-3.5 h-3.5', entry.current_streak > 0 ? 'text-orange-400' : 'text-gray-600')} />
                   <span className="text-xs text-gray-400">{entry.current_streak}d streak</span>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="hidden sm:flex items-center gap-1">
                   <Star className={cn('w-3.5 h-3.5', entry.achievements_count > 0 ? 'text-amber-400' : 'text-gray-600')} />
                   <span className="text-xs text-gray-400">{entry.achievements_count} badges</span>
+                </div>
+                {/* Mobile compact stats */}
+                <div className="flex sm:hidden items-center gap-2 text-[10px] text-gray-500">
+                  <span className="flex items-center gap-0.5">
+                    <Flame className={cn('w-3 h-3', entry.current_streak > 0 ? 'text-orange-400' : 'text-gray-600')} />
+                    {entry.current_streak}d
+                  </span>
+                  <span className="flex items-center gap-0.5">
+                    <Star className={cn('w-3 h-3', entry.achievements_count > 0 ? 'text-amber-400' : 'text-gray-600')} />
+                    {entry.achievements_count}
+                  </span>
                 </div>
               </div>
             </div>
