@@ -1,8 +1,9 @@
 import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
-import { BarChart3 } from 'lucide-react'
+import { BarChart3, Sparkles } from 'lucide-react'
 import type { OptionContract } from '../lib/options/types'
 import { calculateSimulationResult, simulatePriceOverTime } from '../lib/options/blackScholes'
+import { simulatorPresets } from '../lib/options/presets'
 import { SimulatorControls } from '../components/simulator/SimulatorControls'
 import { SimulatorResults } from '../components/simulator/SimulatorResults'
 import { PriceTimelineChart } from '../components/simulator/PriceTimelineChart'
@@ -33,6 +34,11 @@ export default function SimulatorPage() {
         setContract(prev => ({ ...prev, daysToExpiration: dte }))
     }
 
+    // Handle preset selection
+    const handlePresetSelect = (presetContract: Omit<OptionContract, 'riskFreeRate'>) => {
+        setContract({ ...presetContract, riskFreeRate: 0.05 })
+    }
+
     return (
         <div className="max-w-7xl mx-auto space-y-6 pb-12">
             {/* Header */}
@@ -60,6 +66,28 @@ export default function SimulatorPage() {
                     className="lg:col-span-1"
                 >
                     <div className="card sticky top-6">
+                        {/* Preset Scenarios */}
+                        <div className="mb-6 pb-6 border-b border-gray-700/30">
+                            <div className="flex items-center gap-2 mb-3">
+                                <Sparkles className="w-4 h-4 text-primary-400" />
+                                <h3 className="text-sm font-semibold text-gray-200">Quick Scenarios</h3>
+                            </div>
+                            <div className="space-y-2">
+                                {simulatorPresets.slice(0, 5).map((preset) => (
+                                    <button
+                                        key={preset.name}
+                                        onClick={() => handlePresetSelect(preset.contract)}
+                                        className="w-full text-left px-3 py-2 rounded-lg bg-gray-800/30 hover:bg-primary-900/30 border border-gray-700/30 hover:border-primary-700/50 transition-colors group"
+                                    >
+                                        <p className="text-sm font-medium text-gray-200 group-hover:text-primary-400 transition-colors">
+                                            {preset.name}
+                                        </p>
+                                        <p className="text-xs text-gray-500 mt-0.5">{preset.description}</p>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
                         <h2 className="text-xl font-semibold mb-4 text-gray-200">Controls</h2>
                         <SimulatorControls contract={contract} onChange={setContract} />
                     </div>
