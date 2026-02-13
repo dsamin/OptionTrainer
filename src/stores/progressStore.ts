@@ -30,7 +30,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: 'streak-3', name: 'Streak Starter', description: '3 day learning streak', icon: '🔥', requirement: { type: 'streak', value: 3 } },
   { id: 'streak-7', name: 'Week Warrior', description: '7 day learning streak', icon: '⚡', requirement: { type: 'streak', value: 7 } },
   { id: 'streak-14', name: 'Consistency King', description: '14 day learning streak', icon: '👑', requirement: { type: 'streak', value: 14 } },
-  { id: 'streak-21', name: 'Master Trader', description: 'Complete all 21 days', icon: '🎓', requirement: { type: 'streak', value: 21 } },
+  { id: 'streak-18', name: 'Master Trader', description: 'Complete all 18 days', icon: '🎓', requirement: { type: 'streak', value: 18 } },
   { id: 'quiz-master', name: 'Quiz Master', description: 'Score 100% on 5 quizzes', icon: '🧠', requirement: { type: 'perfect', value: 5 } },
   { id: 'rsi-expert', name: 'RSI Expert', description: 'Complete RSI lesson with 100%', icon: '📊', requirement: { type: 'quizScore', value: 5 } },
   { id: 'theta-king', name: 'Theta King', description: 'Complete Theta lesson with 100%', icon: '⏰', requirement: { type: 'quizScore', value: 9 } },
@@ -116,12 +116,12 @@ export const useProgressStore = create<ProgressState>()(
                 earned = completedCount >= achievement.requirement.value
                 break
               case 'week':
-                const weekStart = (achievement.requirement.value - 1) * 7 + 1
-                const weekEnd = achievement.requirement.value * 7
+                const weekStart = (achievement.requirement.value - 1) * 6 + 1
+                const weekEnd = achievement.requirement.value * 6
                 const weekLessons = Object.values(newLessons).filter(
                   l => l.dayNumber >= weekStart && l.dayNumber <= weekEnd && l.completed
                 )
-                earned = weekLessons.length === 7
+                earned = weekLessons.length === 6
                 break
               case 'streak':
                 earned = state.currentStreak + 1 >= achievement.requirement.value
@@ -195,7 +195,7 @@ export const useProgressStore = create<ProgressState>()(
       getProgress: () => {
         const lessons = get().lessons
         const completed = Object.values(lessons).filter(l => l.completed).length
-        const total = 21
+        const total = 18
         return {
           completed,
           total,
@@ -210,7 +210,7 @@ export const useProgressStore = create<ProgressState>()(
           .map(l => l.dayNumber)
 
         if (completed.length === 0) return 1
-        return Math.min(Math.max(...completed) + 1, 21)
+        return Math.min(Math.max(...completed) + 1, 18)
       },
 
       isLessonUnlocked: (dayNumber) => {
@@ -221,14 +221,14 @@ export const useProgressStore = create<ProgressState>()(
 
       getWeekProgress: (week) => {
         const lessons = get().lessons
-        const weekStart = (week - 1) * 7 + 1
-        const weekEnd = week * 7
+        const weekStart = (week - 1) * 6 + 1
+        const weekEnd = week * 6
         const weekLessons = Object.values(lessons).filter(
           l => l.dayNumber >= weekStart && l.dayNumber <= weekEnd
         )
         return {
           completed: weekLessons.filter(l => l.completed).length,
-          total: 7,
+          total: 6,
         }
       },
 

@@ -66,7 +66,7 @@ interface ProfileCardProps {
 function ProfileCard({ user, index, onSelect, isSelecting }: ProfileCardProps) {
   const [hovered, setHovered] = useState(false);
   const lvlCfg = LEVEL_CONFIG[user.level_name] ?? LEVEL_CONFIG.Rookie;
-  const completionPct = Math.round((user.lessons_completed / 21) * 100);
+  const completionPct = Math.round((user.lessons_completed / 18) * 100);
   const avatarSrc = AVATAR_MAP[user.avatar] ?? devanImg;
 
   const ringColor =
@@ -127,7 +127,7 @@ function ProfileCard({ user, index, onSelect, isSelecting }: ProfileCardProps) {
 
         {user.lessons_completed > 0 ? (
           <p className="text-xs text-indigo-400 font-medium mt-0.5">
-            {user.lessons_completed}/21 lessons complete
+            {user.lessons_completed}/18 lessons complete
           </p>
         ) : (
           <p className="text-xs text-gray-500 mt-0.5">Not started yet</p>
@@ -252,12 +252,12 @@ export default function LandingPage({ onSelectUser }: LandingPageProps) {
             </span>
           </h1>
           <p className="text-lg text-gray-400 font-medium">
-            Master Options Trading in 21 Days
+            Master Options Trading in 18 Days
           </p>
 
           <div className="flex items-center justify-center gap-6 mt-6">
             {[
-              { icon: Star, label: '21 Lessons', color: 'text-yellow-400' },
+              { icon: Star, label: '18 Lessons', color: 'text-yellow-400' },
               { icon: Zap,  label: 'XP Rewards',  color: 'text-indigo-400' },
               { icon: Trophy, label: 'Badges',    color: 'text-amber-400' },
             ].map(({ icon: Icon, label, color }) => (

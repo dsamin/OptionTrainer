@@ -50,7 +50,7 @@ export default function Leaderboard() {
 
       {entries.map((entry, i) => {
         const rank = RANK_CONFIG[i] ?? { bg: 'from-gray-800/50 to-gray-900/30', border: 'border-gray-700/40', medal: `#${i + 1}`, glow: '' };
-        const completionPct = Math.round((entry.lessons_completed / 21) * 100);
+        const completionPct = Math.round((entry.lessons_completed / 18) * 100);
 
         return (
           <motion.div
@@ -99,7 +99,7 @@ export default function Leaderboard() {
                 </div>
 
                 <div className="flex items-center gap-3 text-xs text-gray-500">
-                  <span>{entry.lessons_completed}/21 lessons</span>
+                  <span>{entry.lessons_completed}/18 lessons</span>
                   <span>•</span>
                   <span>Avg {entry.average_quiz_score}%</span>
                 </div>

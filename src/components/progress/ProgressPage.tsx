@@ -52,7 +52,7 @@ export function ProgressPage() {
             {/* Overview Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                    { icon: Target, label: 'Days Complete', value: `${progress.completed}/21`, color: 'text-primary-400', bg: 'bg-primary-600/20' },
+                    { icon: Target, label: 'Days Complete', value: `${progress.completed}/18`, color: 'text-primary-400', bg: 'bg-primary-600/20' },
                     { icon: Flame, label: 'Current Streak', value: currentStreak, color: 'text-warning-400', bg: 'bg-warning-600/20' },
                     { icon: Zap, label: 'Total XP', value: totalXp.toLocaleString(), color: 'text-primary-400', bg: 'bg-primary-600/20' },
                     { icon: Star, label: 'Avg Quiz Score', value: `${averageScore}%`, color: 'text-success-400', bg: 'bg-success-600/20' },
@@ -133,7 +133,7 @@ export function ProgressPage() {
                 <div className="flex justify-between text-sm text-gray-500 mt-2">
                     <span>Day 1</span>
                     <span>Day {currentDay} (Current)</span>
-                    <span>Day 21</span>
+                    <span>Day 18</span>
                 </div>
             </motion.div>
 
@@ -147,7 +147,7 @@ export function ProgressPage() {
                 <div className="space-y-4">
                     {curriculum.map((week) => {
                         const weekProgress = getWeekProgress(week.week)
-                        const weekPercent = Math.round((weekProgress.completed / 7) * 100)
+                        const weekPercent = Math.round((weekProgress.completed / 6) * 100)
 
                         return (
                             <div key={week.week} className="card">
@@ -163,7 +163,7 @@ export function ProgressPage() {
                                         'font-bold',
                                         weekPercent === 100 ? 'text-success-400' : 'text-gray-400'
                                     )}>
-                                        {weekProgress.completed}/7
+                                        {weekProgress.completed}/6
                                     </span>
                                 </div>
                                 <div className="h-2 bg-gray-800 rounded-full overflow-hidden mb-3">
@@ -177,7 +177,7 @@ export function ProgressPage() {
                                 </div>
 
                                 {/* Day details */}
-                                <div className="grid grid-cols-7 gap-2">
+                                <div className="grid grid-cols-6 gap-2">
                                     {week.days.map((day) => {
                                         const lesson = lessons[day.day]
                                         const isCompleted = lesson?.completed

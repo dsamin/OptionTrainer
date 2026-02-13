@@ -44,11 +44,10 @@ export const curriculum: WeekData[] = [
     days: [
       { day: 1, title: 'Price Action Basics' },
       { day: 2, title: 'Support & Resistance' },
-      { day: 3, title: 'Trend Lines' },
+      { day: 3, title: 'Trend Lines & Channels' },
       { day: 4, title: 'Moving Averages' },
       { day: 5, title: 'RSI Fundamentals' },
       { day: 6, title: 'Volume Analysis' },
-      { day: 7, title: 'Week 1 Review' },
     ],
   },
   {
@@ -57,54 +56,52 @@ export const curriculum: WeekData[] = [
     icon: '🏛️',
     description: 'Understand delta, theta, vega, and probability',
     days: [
-      { day: 8, title: 'Delta Deep Dive' },
-      { day: 9, title: 'Theta Mastery' },
-      { day: 10, title: 'Implied Volatility' },
-      { day: 11, title: 'Vega Management' },
-      { day: 12, title: 'Probability of Profit' },
-      { day: 13, title: 'DTE Selection' },
-      { day: 14, title: 'Week 2 Review' },
+      { day: 7, title: 'Delta & Probability' },
+      { day: 8, title: 'Theta & Time Decay' },
+      { day: 9, title: 'Implied Volatility' },
+      { day: 10, title: 'Vega & Volatility Risk' },
+      { day: 11, title: 'DTE Selection' },
+      { day: 12, title: 'Strike Selection' },
     ],
   },
   {
     week: 3,
-    title: 'Advanced Strategies',
+    title: 'Strategy & Execution',
     icon: '🎯',
-    description: 'Apply everything to your trading style',
+    description: 'Apply everything to profitable trading',
     days: [
-      { day: 15, title: 'Iron Condor Optimization' },
-      { day: 16, title: 'Credit Spread Timing' },
-      { day: 17, title: 'Managing Assignments' },
-      { day: 18, title: 'Rolling Strategies' },
-      { day: 19, title: 'Position Sizing' },
-      { day: 20, title: 'Trading Plan' },
-      { day: 21, title: 'Final Assessment' },
+      { day: 13, title: 'Iron Condors' },
+      { day: 14, title: 'Credit Spread Timing' },
+      { day: 15, title: 'Managing Assignments' },
+      { day: 16, title: 'Rolling Strategies' },
+      { day: 17, title: 'Position Sizing & Trading Plan' },
+      { day: 18, title: 'Final Assessment' },
     ],
   },
 ]
 
-// Import all day content
+// Import all day content - 18 days total
+// Week 1: Technical Analysis (Days 1-6)
 import { lesson as day1 } from './week1/day1'
 import { lesson as day2 } from './week1/day2'
 import { lesson as day3 } from './week1/day3'
 import { lesson as day4 } from './week1/day4'
 import { lesson as day5 } from './week1/day5'
 import { lesson as day6 } from './week1/day6'
-import { lesson as day7 } from './week1/day7'
+// Week 2: Options Greeks (Days 7-12)
+import { day7 } from './week2/day7'
 import { day8 } from './week2/day8'
 import { day9 } from './week2/day9'
 import { day10 } from './week2/day10'
 import { day11 } from './week2/day11'
 import { day12 } from './week2/day12'
-import { day13 } from './week2/day13'
-import { day14 } from './week2/day14'
+// Week 3: Strategy & Execution (Days 13-18)
+import { day13 } from './week3/day13'
+import { day14 } from './week3/day14'
 import { day15 } from './week3/day15'
 import { day16 } from './week3/day16'
 import { day17 } from './week3/day17'
 import { day18 } from './week3/day18'
-import { day19 } from './week3/day19'
-import { day20 } from './week3/day20'
-import { day21 } from './week3/day21'
 
 const allDays: Record<number, LessonContent> = {
   1: day1,
@@ -125,9 +122,6 @@ const allDays: Record<number, LessonContent> = {
   16: day16,
   17: day17,
   18: day18,
-  19: day19,
-  20: day20,
-  21: day21,
 }
 
 export function getDayContent(day: number): LessonContent | undefined {

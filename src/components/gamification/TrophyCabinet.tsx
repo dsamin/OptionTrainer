@@ -18,7 +18,7 @@ export const ACHIEVEMENT_DEFS: AchievementDef[] = [
   { id: 'streak-starter',    icon: '🔥', title: 'Streak Starter',       description: '3-day consecutive learning streak',         rarity: 'common',    xpReward: 75   },
   { id: 'week-warrior',      icon: '⚡', title: 'Week Warrior',         description: '7-day learning streak',                     rarity: 'rare',     xpReward: 150  },
   { id: 'consistency-king',  icon: '👑', title: 'Consistency King',     description: '14-day learning streak',                    rarity: 'epic',     xpReward: 300  },
-  { id: 'master-trader',     icon: '🎓', title: 'Master Trader',        description: 'Complete all 21 days',                      rarity: 'legendary', xpReward: 500  },
+  { id: 'master-trader',     icon: '🎓', title: 'Master Trader',        description: 'Complete all 18 days',                      rarity: 'legendary', xpReward: 500  },
   { id: 'quiz-master',       icon: '🧠', title: 'Quiz Master',          description: 'Score 100% on 5 quizzes',                   rarity: 'rare',     xpReward: 200  },
   { id: 'rsi-expert',        icon: '📊', title: 'RSI Expert',           description: 'Ace the RSI lesson with 100%',              rarity: 'common',    xpReward: 100  },
   { id: 'theta-king',        icon: '⏰', title: 'Theta King',           description: 'Ace the Theta lesson with 100%',            rarity: 'rare',     xpReward: 150  },

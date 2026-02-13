@@ -27,7 +27,7 @@ export function Dashboard() {
   const currentDay = getCurrentDay()
   const progress = getProgress()
   const currentLesson = getDayContent(currentDay)
-  const currentWeek = Math.ceil(currentDay / 7)
+  const currentWeek = Math.ceil(currentDay / 6)
 
   const recentAchievements = ACHIEVEMENTS
     .filter(a => achievements.includes(a.id))
@@ -50,11 +50,11 @@ export function Dashboard() {
             <p className="text-gray-400 mb-4">
               {progress.completed === 0
                 ? "Ready to start your options trading journey?"
-                : progress.completed === 21
+                : progress.completed === 18
                   ? "Congratulations! You've completed the entire curriculum!"
                   : `You're ${progress.percentage}% through the curriculum. Keep going!`}
             </p>
-            {progress.completed < 21 && (
+            {progress.completed < 18 && (
               <Link
                 to={`/lesson/${currentDay}`}
                 className="btn-primary inline-flex items-center gap-2"
@@ -143,7 +143,7 @@ export function Dashboard() {
       </div>
 
       {/* Current Lesson Preview */}
-      {progress.completed < 21 && currentLesson && (
+      {progress.completed < 18 && currentLesson && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -209,7 +209,7 @@ export function Dashboard() {
         {curriculum.map((week) => {
           const weekProgress = getWeekProgress(week.week)
           const isCurrentWeek = week.week === currentWeek
-          const isCompleted = weekProgress.completed === 7
+          const isCompleted = weekProgress.completed === 6
 
           return (
             <div
@@ -238,11 +238,11 @@ export function Dashboard() {
                     'h-full rounded-full transition-all duration-500',
                     isCompleted ? 'bg-success-500' : 'bg-primary-500'
                   )}
-                  style={{ width: `${(weekProgress.completed / 7) * 100}%` }}
+                  style={{ width: `${(weekProgress.completed / 6) * 100}%` }}
                 />
               </div>
               <p className="text-sm text-gray-500 mt-2">
-                {weekProgress.completed}/7 lessons complete
+                {weekProgress.completed}/6 lessons complete
               </p>
             </div>
           )
