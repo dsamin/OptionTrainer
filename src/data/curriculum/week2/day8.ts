@@ -43,6 +43,17 @@ Days to Expiration vs Relative Theta:
 About 1/3 of an option's time value decays in the final week.`
     },
     {
+      type: 'simulator',
+      title: 'Interactive Theta Decay',
+      content: 'Drag the Days to Expiration slider to see how theta accelerates',
+      simulatorPreset: {
+        stockPrice: 150,
+        strikePrice: 150,
+        optionType: 'call',
+        scenario: 'theta-decay'
+      }
+    },
+    {
       type: 'example',
       title: 'Theta in NVDA Credit Spread',
       content: `NVDA at $880, 21 DTE

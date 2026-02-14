@@ -81,6 +81,17 @@ You have roughly an 88% probability that the 850 strike expires worthless.`,
 - Requires active management`
     },
     {
+      type: 'simulator',
+      title: 'Interactive Delta Explorer',
+      content: 'Adjust the stock price to see how delta changes with moneyness',
+      simulatorPreset: {
+        stockPrice: 150,
+        strikePrice: 150,
+        optionType: 'call',
+        scenario: 'delta-sensitivity'
+      }
+    },
+    {
       type: 'text',
       title: 'Position Delta in Spreads',
       content: `Position delta converts options exposure into share equivalents:

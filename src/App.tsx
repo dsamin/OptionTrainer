@@ -8,6 +8,7 @@ import { StocksPage } from './components/stocks/StocksPage'
 import { SettingsPage } from './components/settings/SettingsPage'
 import LandingPage from './pages/LandingPage'
 import GameHubPage from './pages/GameHubPage'
+import SimulatorPage from './pages/SimulatorPage'
 import { useUserStore } from './stores/userStore'
 import type { ApiUser } from './services/api'
 
@@ -38,6 +39,7 @@ function AppRoutes() {
         <Route path="stocks" element={<StocksPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="gamehub" element={<GameHubPage />} />
+        <Route path="simulator" element={<SimulatorPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
