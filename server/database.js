@@ -5,7 +5,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_PATH = process.env.DB_PATH || '/tmp/optiontrainer-db.json';
+const DATA_PATH = process.env.DB_PATH || path.join(__dirname, '..', 'data.json');
 
 const WEEKLY_CHALLENGES = [
   // Week 1
