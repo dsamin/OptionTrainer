@@ -30,6 +30,9 @@ app.use('/api/challenges', require('./routes/challenges'));
 // Admin routes
 app.use('/api/admin', require('./routes/admin'));
 
+// Session tracking routes
+app.use('/api/session', require('./routes/session'));
+
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
 app.listen(PORT, () => {

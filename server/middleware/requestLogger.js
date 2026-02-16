@@ -4,6 +4,7 @@
  * Non-blocking: calls next() immediately.
  */
 const { db } = require('../database');
+const { geolocate } = require('../services/geolocate');
 
 function requestLogger(req, res, next) {
     // Skip admin routes to avoid noise
@@ -29,6 +30,9 @@ function requestLogger(req, res, next) {
             user_agent: userAgent,
             status_code: res.statusCode,
         });
+
+        // Warm geo cache (fire-and-forget)
+        geolocate(ip).catch(() => { });
     } catch (err) {
         // Never let logging break the app
         console.error('Request logger error:', err.message);
