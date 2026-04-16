@@ -66,8 +66,8 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 
 export const api = {
   // Users
-  getUsers: ()              => request<ApiUser[]>('/users'),
-  getUser:  (id: number)    => request<ApiUser>(`/users/${id}`),
+  getUsers: () => request<ApiUser[]>('/users'),
+  getUser: (id: number) => request<ApiUser>(`/users/${id}`),
 
   // Progress
   getProgress: (userId: number) => request<{
@@ -84,7 +84,7 @@ export const api = {
     exerciseCompleted?: boolean;
     timeSpentMinutes?: number;
   }) => request<{ success: boolean; newAchievements: string[]; total_xp: number; current_streak: number }>
-    (`/progress/${userId}/lesson`, { method: 'POST', body: JSON.stringify(data) }),
+      (`/progress/${userId}/lesson`, { method: 'POST', body: JSON.stringify(data) }),
 
   saveQuizAttempt: (userId: number, dayNumber: number, score: number) =>
     request<{ success: boolean }>(`/progress/${userId}/quiz-attempt`, {
@@ -110,4 +110,18 @@ export const api = {
 
   // Health check
   healthCheck: () => fetch(`${BASE}/health`).then(r => r.ok).catch(() => false),
+
+  // Session tracking
+  session: {
+    start: (userId: number) =>
+      request<{ sessionId: number }>('/session/start', { method: 'POST', body: JSON.stringify({ userId }) }),
+    heartbeat: (sessionId: number) =>
+      request<{ ok: boolean }>('/session/heartbeat', { method: 'POST', body: JSON.stringify({ sessionId }) }),
+    end: (sessionId: number) =>
+      fetch(`${BASE}/session/end`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId }),
+      }).catch(() => { }),
+  },
 };

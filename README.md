@@ -11,6 +11,7 @@
 - [Project Structure](#project-structure)
 - [Curriculum](#curriculum)
 - [Gamification System](#gamification-system)
+- [Admin Dashboard](#admin-dashboard)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
 - [API Reference](#api-reference)
@@ -26,6 +27,7 @@ OptionTrainer is a full-stack web application that guides users through a 21-day
 - **Interactive quizzes** with instant feedback, explanations, and score tracking
 - **Gamification** — XP, levels, streaks, achievement badges, weekly challenges, and a leaderboard
 - **Real-time leaderboard** comparing all three users on XP, streaks, and quiz performance
+- **Admin analytics dashboard** — password-protected dashboard with login tracking, session monitoring, geo distribution, quiz performance charts, and request logging
 - **Lightweight backend** — Express + JSON file store, zero native dependencies, no external database required
 
 ---
@@ -67,7 +69,7 @@ OptionTrainer is a full-stack web application that guides users through a 21-day
 │  ┌────────────────────────────▼──────────────────────────────────┐  │
 │  │                       Express Router                          │  │
 │  │  /api/users  /api/progress  /api/leaderboard                  │  │
-│  │  /api/achievements  /api/challenges                           │  │
+│  │  /api/achievements  /api/challenges  /api/admin               │  │
 │  └───────────────────────────────────────────────────────────────┘  │
 │                                                                      │
 │  ┌────────────┐  ┌─────────────┐  ┌───────────┐  ┌─────────────┐  │
@@ -117,13 +119,17 @@ Sidebar shows updated XP / level badge
 OptionTrainer/
 │
 ├── src/                          # Frontend (React + TypeScript)
-│   ├── App.tsx                   # Root router — login gate → main app
+│   ├── App.tsx                   # Root router — login gate → main app + admin routes
 │   ├── main.tsx                  # React entry point
 │   ├── vite-env.d.ts             # Type declarations (images, vite)
 │   │
 │   ├── pages/
 │   │   ├── LandingPage.tsx       # Profile selection screen (login)
-│   │   └── GameHubPage.tsx       # Leaderboard / Trophies / Challenges
+│   │   ├── GameHubPage.tsx       # Leaderboard / Trophies / Challenges
+│   │   └── admin/
+│   │       ├── AdminLoginPage.tsx     # Admin password login
+│   │       ├── AdminDashboardPage.tsx # Analytics dashboard with 8 widgets
+│   │       └── AdminLogsPage.tsx      # Paginated request logs table
 │   │
 │   ├── components/
 │   │   ├── layout/
@@ -142,6 +148,20 @@ OptionTrainer/
 │   │   │   ├── LevelBadge.tsx    # Level chip + XP progress bar
 │   │   │   └── WeeklyChallenges.tsx  # 9 challenges across 3 weeks
 │   │   │
+│   │   ├── admin/                # Admin dashboard components
+│   │   │   ├── AdminLayout.tsx        # Top nav with Dashboard/Logs links
+│   │   │   ├── AdminRouteGuard.tsx     # Auth redirect guard
+│   │   │   ├── ActivityFeed.tsx        # Scrollable activity feed
+│   │   │   ├── cards/
+│   │   │   │   ├── OverviewCards.tsx   # 6 animated stat cards
+│   │   │   │   └── UserStatsTable.tsx  # User stats with avatars & levels
+│   │   │   └── charts/
+│   │   │       ├── LoginTimeline.tsx         # 30-day area chart
+│   │   │       ├── GeoDistribution.tsx       # Horizontal bar chart
+│   │   │       ├── QuizPerformance.tsx       # Color-coded vertical bars
+│   │   │       ├── PopularLessons.tsx        # Ranked lesson list
+│   │   │       └── UserProgressComparison.tsx # Side-by-side comparison
+│   │   │
 │   │   ├── progress/
 │   │   │   └── ProgressPage.tsx  # Analytics: week breakdown, streaks
 │   │   ├── stocks/
@@ -157,12 +177,14 @@ OptionTrainer/
 │   │       └── week3/            # Days 15–21: Advanced Strategies
 │   │
 │   ├── stores/
-│   │   ├── userStore.ts          # Current logged-in user (persisted)
+│   │   ├── userStore.ts          # Current logged-in user + session tracking
+│   │   ├── adminStore.ts         # Admin auth state (token, persisted)
 │   │   ├── progressStore.ts      # Local lesson progress (localStorage)
 │   │   └── settingsStore.ts      # Theme + preferences (localStorage)
 │   │
 │   ├── services/
-│   │   └── api.ts                # Typed fetch wrapper for all API calls
+│   │   ├── api.ts                # Typed fetch wrapper for all API calls
+│   │   └── adminApi.ts           # Authenticated admin API client
 │   │
 │   └── Images/
 │       ├── Devan.PNG
@@ -172,17 +194,26 @@ OptionTrainer/
 ├── server/                       # Backend (Node.js / Express)
 │   ├── index.js                  # Server entry — mounts all routes
 │   ├── database.js               # JSON file store (read/write helpers)
+│   ├── auth.js                   # HMAC-SHA256 token generation & verification
 │   ├── leveling.js               # Level thresholds & getLevel()
 │   ├── xp.js                     # XP formula (base + bonuses)
 │   ├── achievements.js           # Auto-grant achievement checker
 │   ├── data.json                 # Persistent database file (gitignored)
-│   ├── package.json              # express + cors only
+│   ├── .env.example              # Environment variable template
+│   ├── package.json              # express + cors + dotenv
+│   ├── middleware/
+│   │   ├── adminAuth.js          # Bearer token verification middleware
+│   │   └── requestLogger.js      # API request logging middleware
+│   ├── services/
+│   │   └── geolocate.js          # IP geolocation (ip-api.com + cache)
 │   └── routes/
 │       ├── users.js              # GET /api/users, GET /api/users/:id
 │       ├── progress.js           # GET/POST /api/progress/:userId
 │       ├── leaderboard.js        # GET /api/leaderboard
 │       ├── achievements.js       # GET/POST /api/achievements/:userId
-│       └── challenges.js         # GET /api/challenges, POST /api/challenges/complete
+│       ├── challenges.js         # GET /api/challenges, POST /api/challenges/complete
+│       ├── admin.js              # POST /login, GET /analytics, /logs, /sessions
+│       └── session.js            # POST /start, /heartbeat, /end
 │
 ├── index.html                    # Vite HTML entry
 ├── package.json                  # Frontend deps + scripts
@@ -284,6 +315,27 @@ XP per lesson = 100 (base)
 
 ---
 
+## Admin Dashboard
+
+A password-protected analytics dashboard at `/admin` for monitoring user activity.
+
+### Features
+- **Overview cards** — total logins, active sessions, lessons completed, avg quiz score
+- **Login timeline** — 30-day area chart (TradingView lightweight-charts)
+- **User statistics table** — per-user logins, time spent, quiz scores, streaks, and levels
+- **Geographic distribution** — IP-based city/country breakdown
+- **Quiz performance** — per-lesson attempt counts and average scores
+- **Popular lessons** — most-completed lessons ranked by completions
+- **Activity feed** — real-time feed of logins, lesson completions, and quiz attempts
+- **Request logs** — paginated table of all API requests with method, status, IP, and client
+
+### Access
+- URL: `http://localhost:5173/admin`
+- Default password: set via `ADMIN_PASSWORD` environment variable
+- Tokens expire after 24 hours (HMAC-SHA256 signed)
+
+---
+
 ## Tech Stack
 
 ### Frontend
@@ -297,7 +349,7 @@ XP per lesson = 100 (base)
 | Tailwind CSS | Utility-first styling |
 | Framer Motion | Animations |
 | Lucide React | Icons |
-| Lightweight Charts | Financial candlestick charts |
+| Lightweight Charts | Financial charts (candlestick + admin timeline) |
 
 ### Backend
 | Tool | Purpose |
@@ -348,6 +400,13 @@ You'll land on the profile selection screen. Pick a user to begin.
 
 > **Note:** The app works without the backend server — it falls back to empty stats with local-only progress. Run the server to enable multi-user persistence, leaderboard, and challenge sync.
 
+### 6. Access the admin dashboard
+```
+http://localhost:5173/admin
+```
+
+Enter the admin password (set via `ADMIN_PASSWORD` in `server/.env`, or use the default fallback). See [Admin Dashboard](#admin-dashboard) for details.
+
 ### Build for production
 ```bash
 npm run build
@@ -373,6 +432,18 @@ Base URL: `http://localhost:3001/api`
 | GET | `/challenges?userId=X` | All challenges with completion status |
 | POST | `/challenges/complete` | Complete a challenge and award XP |
 | GET | `/health` | Server health check |
+| POST | `/session/start` | Start a user session |
+| POST | `/session/heartbeat` | Session heartbeat (60s) |
+| POST | `/session/end` | End a session (supports sendBeacon) |
+
+### Admin Endpoints (require `Authorization: Bearer <token>`)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/admin/login` | Authenticate with admin password |
+| GET | `/admin/analytics` | Full analytics (overview, per-user, charts) |
+| GET | `/admin/logs?page=N` | Paginated request logs (50/page) |
+| GET | `/admin/sessions` | Session history |
 
 ### POST `/progress/:userId/lesson` body
 ```json
@@ -400,14 +471,15 @@ Base URL: `http://localhost:3001/api`
 
 ## Data Persistence
 
-All backend data is stored in `server/data.json` — a single JSON file containing:
+All backend data is stored in `data.json` (project root) — a single JSON file containing:
 
 ```
 users / lesson_progress / quiz_attempts / user_achievements
 user_stats / weekly_challenges / user_challenge_completions
+request_logs / login_events / sessions / geo_cache
 ```
 
-This file is created automatically on first server start and should be excluded from version control if it contains real user data (it is listed in `.gitignore`).
+This file is created automatically on first server start and is listed in `.gitignore`.
 
 ---
 

@@ -12,6 +12,8 @@ dist/
 
 # Database (contains real user progress — keep local)
 server/data.json
+db_store.json
+data.json
 
 # TypeScript build info
 *.tsbuildinfo
